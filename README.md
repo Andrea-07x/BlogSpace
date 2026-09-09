@@ -32,3 +32,8 @@ A simple and user-friendly blog platform built with Flask and SQLite.
 
 ```bash
 pip install -r requirements.txt
+
+## Author
+
+**Andrea Antony**
+B.Tech Information Technology Student
