@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ post["title"] }} | BlogSpace</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <div class="logo">
+            ✍️ BlogSpace
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('index') }}">
+                Home
+            </a>
+
+            {% if session.get("user_id") %}
+
+                <span class="welcome">
+                    Welcome, {{ session.get("username") }}
+                </span>
+
+                <a href="{{ url_for('create_post') }}">
+                    Write
+                </a>
+
+                <a href="{{ url_for('logout') }}">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('login') }}">
+                    Login
+                </a>
+
+                <a href="{{ url_for('register') }}"
+                   class="nav-button">
+                    Get Started
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="post-page">
+
+        <!-- ARTICLE -->
+        <article class="post-card">
+
+            <div class="post-icon">
+                📖
+            </div>
+
+            <h1>
+                {{ post["title"] }}
+            </h1>
+
+            <div class="post-author">
+
+                <span>✍️</span>
+
+                <span>
+                    Written by
+                    <strong>{{ post["username"] }}</strong>
+                </span>
+
+            </div>
+
+            <div class="post-content">
+                {{ post["content"] }}
+            </div>
+
+
+            <!-- OWNER ACTIONS -->
+            {% if session.get("user_id") == post["user_id"] %}
+
+                <div class="post-actions">
+
+                    <a href="{{ url_for('edit_post', post_id=post['id']) }}"
+                       class="hero-button">
+                        ✏️ Edit Post
+                    </a>
+
+                    <a href="{{ url_for('delete_post', post_id=post['id']) }}"
+                       class="hero-button">
+                        🗑️ Delete Post
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </article>
+
+
+        <!-- COMMENTS -->
+        <section class="comments-section">
+
+            <h2>
+                💬 Comments
+            </h2>
+
+
+            {% if comments %}
+
+                {% for comment in comments %}
+
+                    <div class="comment">
+
+                        <strong>
+                            {{ comment["username"] }}
+                        </strong>
+
+                        <p>
+                            {{ comment["content"] }}
+                        </p>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="no-comments">
+                    No comments yet. Be the first to share your thoughts!
+                </p>
+
+            {% endif %}
+
+
+            <!-- COMMENT FORM -->
+            {% if session.get("user_id") %}
+
+                <form method="POST"
+                      action="{{ url_for('add_comment', post_id=post['id']) }}"
+                      class="comment-form">
+
+                    <h3>
+                        Leave a comment
+                    </h3>
+
+                    <textarea
+                        name="content"
+                        placeholder="Share your thoughts..."
+                        required></textarea>
+
+                    <button type="submit"
+                            class="primary-btn">
+                        Post Comment
+                    </button>
+
+                </form>
+
+            {% else %}
+
+                <p class="no-comments">
+
+                    Please
+                    <a href="{{ url_for('login') }}">
+                        login
+                    </a>
+                    to join the conversation.
+
+                </p>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- BACK -->
+        <a href="{{ url_for('index') }}"
+           class="back-home">
+            ← Back to all posts
+        </a>
+
+    </main>
+
+</body>
+
+</html>

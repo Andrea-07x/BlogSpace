@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BlogSpace | Share Your Ideas</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+
+        <div class="logo">
+            ✍️ BlogSpace
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('index') }}">
+                Home
+            </a>
+
+            {% if session.get("user_id") %}
+
+                <span class="welcome">
+                    Welcome, {{ session.get("username") }}
+                </span>
+
+                <a href="{{ url_for('create_post') }}">
+                    Write a Post
+                </a>
+
+                <a href="{{ url_for('logout') }}">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('login') }}">
+                    Login
+                </a>
+
+                <a href="{{ url_for('register') }}"
+                   class="nav-button">
+                    Get Started
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+
+        <div>
+
+            <p style="font-size: 14px; font-weight: bold; margin-bottom: 15px;">
+                ✨ YOUR SPACE TO SHARE
+            </p>
+
+            <h1>
+                Ideas worth sharing.
+            </h1>
+
+            <p>
+                Welcome to BlogSpace — a simple and modern platform
+                where you can write, share and discover meaningful stories.
+            </p>
+
+            {% if session.get("user_id") %}
+
+                <a href="{{ url_for('create_post') }}"
+                   class="hero-button">
+                    ✍️ Start Writing
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('register') }}"
+                   class="hero-button">
+                    Create Your Account →
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- POSTS -->
+    <section class="posts-container">
+
+        <h2>
+            Latest Stories
+        </h2>
+
+        {% if posts %}
+
+            <div class="posts-grid">
+
+                {% for post in posts %}
+
+                    <article class="post-preview">
+
+                        <div style="font-size: 28px; margin-bottom: 12px;">
+                            📖
+                        </div>
+
+                        <h3>
+                            {{ post["title"] }}
+                        </h3>
+
+                        <p style="margin-bottom: 8px;">
+                            By <strong>{{ post["username"] }}</strong>
+                        </p>
+
+                        <p>
+                            {{ post["content"][:150] }}
+                            {% if post["content"]|length > 150 %}
+                                ...
+                            {% endif %}
+                        </p>
+
+                        <a href="{{ url_for('view_post', post_id=post['id']) }}">
+                            Read Article →
+                        </a>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="post-preview">
+
+                <h3>
+                    No stories yet
+                </h3>
+
+                <p>
+                    Be the first person to publish a story on BlogSpace.
+                </p>
+
+                {% if session.get("user_id") %}
+
+                    <a href="{{ url_for('create_post') }}">
+                        Write the First Post →
+                    </a>
+
+                {% else %}
+
+                    <a href="{{ url_for('register') }}">
+                        Join BlogSpace →
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer style="
+        text-align: center;
+        padding: 40px 20px;
+        margin-top: 60px;
+        color: #6b7280;
+        border-top: 1px solid #e5e7eb;
+        background: white;
+    ">
+
+        <p>
+            © 2026 BlogSpace. Built to share ideas that matter.
+        </p>
+
+    </footer>
+
+</body>
+</html>

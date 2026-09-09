@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | BlogSpace</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">✍️ BlogSpace</div>
+
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('register') }}" class="nav-button">Get Started</a>
+        </div>
+    </nav>
+
+    <main class="auth-page">
+
+        <div class="auth-card">
+
+            <div class="auth-icon">🔐</div>
+
+            <h1>Welcome Back</h1>
+
+            <p class="auth-subtitle">
+                Sign in to your BlogSpace account
+                and continue sharing your ideas.
+            </p>
+
+            <form method="POST" action="{{ url_for('login') }}">
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">Password</label>
+
+                    <div class="password-box">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            onclick="togglePassword()"
+                        >
+                            👁️
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="primary-btn">
+                    Login →
+                </button>
+
+            </form>
+
+
+            <p class="auth-footer">
+                Don't have an account?
+                <a href="{{ url_for('register') }}">Create one</a>
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        function togglePassword() {
+
+            const passwordInput = document.getElementById("password");
+            const toggleButton = document.getElementById("togglePassword");
+
+            if (passwordInput.type === "password") {
+
+                passwordInput.type = "text";
+                toggleButton.innerHTML = "🙈";
+
+            } else {
+
+                passwordInput.type = "password";
+                toggleButton.innerHTML = "👁️";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

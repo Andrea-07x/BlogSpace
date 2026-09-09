@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post | BlogSpace</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">✍️ BlogSpace</div>
+
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <main class="create-page">
+
+        <div class="create-card">
+
+            <div class="create-icon">✍️</div>
+
+            <h1>Create a New Post</h1>
+
+            <p class="create-subtitle">
+                Share your thoughts, ideas and stories with the BlogSpace community.
+            </p>
+
+            <form method="POST" action="{{ url_for('create_post') }}">
+
+                <div class="form-group">
+                    <label for="title">Post Title</label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        placeholder="Enter your post title"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="content">Your Story</label>
+
+                    <textarea
+                        id="content"
+                        name="content"
+                        placeholder="Write your story here..."
+                        rows="10"
+                        required
+                    ></textarea>
+                </div>
+
+
+                <div class="create-actions">
+
+                    <a href="{{ url_for('index') }}" class="back-button">
+                        ← Cancel
+                    </a>
+
+                    <button type="submit" class="primary-btn">
+                        Publish Post →
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
